@@ -12,13 +12,14 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import static com.kunal_vats.customer_service.constants.Constants.BillingServiceURI;
 
 
 @Slf4j
@@ -53,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> getCustomersByBillStatus(BillStatus status) {
         List<Long> customerIds = new ArrayList<>();
         try {
-            ResponseEntity<List<Bill>> responseEntity = restTemplate.exchange(String.format("http://localhost:8080/api/bill/status/%s", status.name()),
+            ResponseEntity<List<Bill>> responseEntity = restTemplate.exchange(String.format(BillingServiceURI, status.name()),
                     HttpMethod.GET,
                     null,
                     new ParameterizedTypeReference<List<Bill>>() {
